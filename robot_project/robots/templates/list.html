@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="jumbotron">
+      <h1>Here is a list of all available robots</h1>
+      <p>Please select a Robot to be adopted or to be deleted</p>
+    </div>
+    <div class="container">
+        <div class="card-deck">
+        {% for robot in robots %}
+        <div class="card" id="robotId{{ robot.id }}" style="margin-top: 30px; min-width: 300px; max-width: 300px;">
+          <img class="card-img-top" style="background-color: grey;" src="https://robohash.org/{{ robot.id }}" alt="Robot image">
+          <div class="card-body">
+            <h5 class="card-title">{{ robot.name }}</h5>
+            <p class="card-text">{{ robot }} </p>
+            {% if not robot.owner %}
+            <a class="btn btn-primary" style="margin-left: 30px;" href="{{ url_for('owners.add_owner', robot_id = robot.id) }}">Adopt</a>
+
+            {% else %}
+            <button class="btn btn-primary" style="margin-left: 30px;" disabled>Adopt</button>
+            {% endif %}
+            <button type="button" class="btn btn-primary deleteButton" style="margin-left: 50px;" robot_id="{{ robot.id }}" name="delete">Delete</button>
+          </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
